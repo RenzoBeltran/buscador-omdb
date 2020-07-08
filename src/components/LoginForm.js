@@ -15,7 +15,7 @@ function LoginForm() {
           password: yup.string().required("Colocar un password"),
         })}
         onSubmit={(values) => {
-          sessionStorage.setItem("usuario", JSON.stringify(values));
+          sessionStorage.setItem("user", JSON.stringify(values));
           history.push("/");
         }}
       >

@@ -13,7 +13,32 @@ function Home() {
     });
     setMovies(data.Search);
   }
-  if (sessionStorage.getItem("usuario") == null) {
+  function addFavoriteMovies(movie) {
+    if (localStorage.getItem(sessionStorage.getItem("user")) != null) {
+      if (
+        JSON.parse(localStorage.getItem(sessionStorage.getItem("user"))).filter(
+          (favoriteMovies) => {
+            return movie.Title === favoriteMovies.Title;
+          }
+        ).length < 1
+      ) {
+        localStorage.setItem(
+          sessionStorage.getItem("user"),
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem(sessionStorage.getItem("user"))),
+            movie,
+          ])
+        );
+      }
+    } else {
+      localStorage.setItem(
+        sessionStorage.getItem("user"),
+        JSON.stringify([movie])
+      );
+    }
+  }
+
+  if (sessionStorage.getItem("user") == null) {
     history.push("/login");
   }
   return (
@@ -24,6 +49,18 @@ function Home() {
           <h1>{movie.Title}</h1>
           <img src={movie.Poster} alt='' />
           <h3>{movie.Year}</h3>
+          <button
+            onClick={() => {
+              addFavoriteMovies({
+                Title: movie.Title,
+                Type: movie.Type,
+                Poster: movie.Poster,
+                Year: movie.Year,
+              });
+            }}
+          >
+            Agregar a Favoritos
+          </button>
         </div>
       ))}
     </>
