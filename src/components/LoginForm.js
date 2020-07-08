@@ -2,8 +2,10 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import Button from "./Button";
+import { useHistory } from "react-router-dom";
 
 function LoginForm() {
+  const history = useHistory();
   return (
     <div>
       <Formik
@@ -13,7 +15,8 @@ function LoginForm() {
           password: yup.string().required("Colocar un password"),
         })}
         onSubmit={(values) => {
-          console.log(values);
+          sessionStorage.setItem("usuario", JSON.stringify(values));
+          history.push("/");
         }}
       >
         {(values) => {
