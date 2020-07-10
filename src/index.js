@@ -1,10 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import Normalize from "react-normalize";
+import "./App.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Fragment>
+      <Normalize /> <App />
+    </Fragment>
   </React.StrictMode>,
   document.getElementById("root")
 );
