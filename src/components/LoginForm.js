@@ -28,7 +28,6 @@ const StyledField = styled(Field)`
 `;
 
 const StyledForm = styled(Form)`
-  box-sizing: border-box;
   width: 350px;
   height: 350px;
   display: flex;
