@@ -9,6 +9,7 @@ const StyledDiv = styled.div`
   justify-content: space-around;
   min-height: 100%;
   max-height: auto;
+  padding-top: 30px;
 `;
 const StyledContainer = styled.div`
   background-color: #3b3f47;
@@ -24,9 +25,45 @@ const StyledTitle = styled.h1`
   margin: 0;
 `;
 
+const StyledCard = styled.div`
+  height: 600px;
+  width: 350px;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 15px 25px rgba(175, 175, 175, 0.65);
+  position: relative;
+  &:hover > div {
+    visibility: visible;
+  }
+`;
+
+const StyledLayer = styled.div`
+  visibility: hidden;
+  transition: visibility 200ms ease-in-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 10;
+  background-color: rgba(58, 58, 58, 0.5);
+`;
+
 const BackIcon = styled(AiOutlineLeft)`
   font-size: 35px;
   cursor: pointer;
+`;
+
+const FavoriteMoviesHeader = styled.div`
+  margin-bottom: 20px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function Favorites() {
@@ -46,18 +83,19 @@ function Favorites() {
   }
   return (
     <StyledContainer>
-      <div>
+      <FavoriteMoviesHeader>
         <BackIcon onClick={goBack} />
         <StyledTitle>Tus peliculas favoritas</StyledTitle>
-      </div>
+      </FavoriteMoviesHeader>
       <StyledDiv>
         {JSON.parse(localStorage.getItem(sessionStorage.getItem("user"))).map(
           (favoriteMovie) => (
-            <div key={favoriteMovie.Title}>
-              <h1>{favoriteMovie.Title}</h1>
-              <h3>{favoriteMovie.Year}</h3>
-              <img src={favoriteMovie.Poster} alt='' />
-            </div>
+            <StyledCard img={favoriteMovie.Poster} key={favoriteMovie.Title}>
+              <StyledLayer>
+                <h1>{favoriteMovie.Title}</h1>
+                <h3>{favoriteMovie.Year}</h3>
+              </StyledLayer>
+            </StyledCard>
           )
         )}
       </StyledDiv>

@@ -11,6 +11,35 @@ const StyledDiv = styled.div`
   justify-content: space-around;
   min-height: 100%;
   max-height: auto;
+  padding-top: 25px;
+`;
+
+const StyledCard = styled.div`
+  height: 600px;
+  width: 350px;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 15px 25px rgba(175, 175, 175, 0.65);
+  position: relative;
+  &:hover > div {
+    visibility: visible;
+  }
+`;
+
+const StyledLayer = styled.div`
+  visibility: hidden;
+  transition: visibility 200ms ease-in-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 10;
+  background-color: rgba(58, 58, 58, 0.5);
 `;
 
 function Home() {
@@ -64,23 +93,23 @@ function Home() {
           <h1>No se encontraron resultados :c</h1>
         ) : (
           movies.map((movie) => (
-            <div key={movie.imdbID}>
-              <h1>{movie.Title}</h1>
-              <img src={movie.Poster} alt='' />
-              <h3>{movie.Year}</h3>
-              <button
-                onClick={() => {
-                  addFavoriteMovies({
-                    Title: movie.Title,
-                    Type: movie.Type,
-                    Poster: movie.Poster,
-                    Year: movie.Year,
-                  });
-                }}
-              >
-                Agregar a Favoritos
-              </button>
-            </div>
+            <StyledCard
+              onClick={() => {
+                addFavoriteMovies({
+                  Title: movie.Title,
+                  Type: movie.Type,
+                  Poster: movie.Poster,
+                  Year: movie.Year,
+                });
+              }}
+              img={movie.Poster}
+              key={movie.imdbID}
+            >
+              <StyledLayer>
+                <h1>{movie.Title}</h1>
+                <h3>{movie.Year}</h3>
+              </StyledLayer>
+            </StyledCard>
           ))
         )}
       </StyledDiv>
