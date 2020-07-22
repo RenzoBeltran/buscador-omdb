@@ -74,10 +74,10 @@ function Favorites() {
   if (localStorage.getItem(sessionStorage.getItem("user")) == null) {
     return (
       <StyledContainer>
-        <div>
+        <FavoriteMoviesHeader>
           <BackIcon onClick={goBack} />
           <StyledTitle>Usted no ha escogido peliculas favoritas</StyledTitle>
-        </div>
+        </FavoriteMoviesHeader>
       </StyledContainer>
     );
   }

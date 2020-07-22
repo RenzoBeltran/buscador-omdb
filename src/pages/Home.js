@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import getData from "../api/getData";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import FlashMessage from "../components/FlashMessage";
 
 const StyledDiv = styled.div`
   background-color: #3b3f47;
@@ -45,6 +46,11 @@ const StyledLayer = styled.div`
 function Home() {
   const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState({
+    message: "",
+    isOpen: false,
+  });
+
   const history = useHistory();
   async function getMovies() {
     const response = await getData(process.env.REACT_APP_OMDB, {
@@ -73,12 +79,28 @@ function Home() {
             movie,
           ])
         );
+        setModalIsOpen({ isOpen: true, message: "Agregado a favoritos" });
+        setTimeout(() => {
+          setModalIsOpen({ isOpen: false, message: "" });
+        }, 1500);
+      } else {
+        setModalIsOpen({
+          isOpen: true,
+          message: "Ya está guardado en favoritos",
+        });
+        setTimeout(() => {
+          setModalIsOpen({ isOpen: false, message: "" });
+        }, 1500);
       }
     } else {
       localStorage.setItem(
         sessionStorage.getItem("user"),
         JSON.stringify([movie])
       );
+      setModalIsOpen({ isOpen: true, message: "Agregado a favoritos" });
+      setTimeout(() => {
+        setModalIsOpen({ isOpen: false, message: "" });
+      }, 2000);
     }
   }
 
@@ -113,6 +135,9 @@ function Home() {
           ))
         )}
       </StyledDiv>
+      {modalIsOpen.isOpen ? (
+        <FlashMessage message={modalIsOpen.message} />
+      ) : null}
     </>
   );
 }

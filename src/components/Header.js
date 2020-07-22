@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { IoMdExit } from "react-icons/io";
 
 const StyledDiv = styled.div`
   background-color: #0f1012;
@@ -28,10 +29,34 @@ const StyledButton = styled.button`
     background-color: black;
   }
   color: white;
-  border-radius: 20%;
+  border-radius: 10%;
   border: 1px solid white;
   padding: 5px;
   margin-bottom: 15px;
+  cursor: pointer;
+`;
+
+const StyledLogout = styled(IoMdExit)`
+  font-size: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
+const StyledFavorites = styled.button`
+  background-color: darkgray;
+  &:hover {
+    background-color: black;
+  }
+  color: white;
+  border-radius: 10%;
+  border: 1px solid white;
+  padding: 5px;
+  cursor: pointer;
+`;
+
+const SettingsContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 function Header({ search, setSearch, getMovies }) {
@@ -53,9 +78,16 @@ function Header({ search, setSearch, getMovies }) {
         />
         <StyledButton onClick={getMovies}>Buscar</StyledButton>
       </div>
-      <StyledButton onClick={redirectFavorites}>
-        Mis pelis favoritas
-      </StyledButton>
+      <SettingsContainer>
+        <StyledFavorites onClick={redirectFavorites}>
+          Mis pelis favoritas
+        </StyledFavorites>
+        <StyledLogout
+          onClick={() => {
+            history.push("/login");
+          }}
+        />
+      </SettingsContainer>
     </StyledDiv>
   );
 }
